@@ -8,9 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TwitterDetailViewController : UIViewController
+@interface TwitterLoginController : UIViewController
 
 @property (strong, nonatomic) id detailItem;
 
 @property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
+@property (strong, nonatomic) IBOutlet UITextField *passwordField;
+@property (strong, nonatomic) IBOutlet UITextField *nameField;
+
+- (IBAction)loginButtonPressed:(UIButton *)sender;
+- (IBAction)registerButtonPressed:(UIButton *)sender;
+
 @end

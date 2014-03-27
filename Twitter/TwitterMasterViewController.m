@@ -8,7 +8,8 @@
 
 #import "TwitterMasterViewController.h"
 
-#import "TwitterDetailViewController.h"
+#import "TwitterLoginController.h"
+#import "TwitterViewController.h"
 
 @interface TwitterMasterViewController () {
     NSMutableArray *_objects;

@@ -6,13 +6,13 @@
 //  Copyright (c) 2014 Amnesiacs. All rights reserved.
 //
 
-#import "TwitterDetailViewController.h"
+#import "TwitterLoginController.h"
 
-@interface TwitterDetailViewController ()
+@interface TwitterLoginController ()
 - (void)configureView;
 @end
 
-@implementation TwitterDetailViewController
+@implementation TwitterLoginController
 
 #pragma mark - Managing the detail item
 
@@ -48,4 +48,9 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)loginButtonPressed:(UIButton *)sender {
+}
+
+- (IBAction)registerButtonPressed:(UIButton *)sender {
+}
 @end

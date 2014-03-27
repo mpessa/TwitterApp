@@ -15,13 +15,14 @@
 		D504B6F118E4C46100F4C3FD /* TwitterAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D504B6F018E4C46100F4C3FD /* TwitterAppDelegate.m */; };
 		D504B6F418E4C46100F4C3FD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D504B6F218E4C46100F4C3FD /* Main.storyboard */; };
 		D504B6F718E4C46100F4C3FD /* TwitterMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D504B6F618E4C46100F4C3FD /* TwitterMasterViewController.m */; };
-		D504B6FA18E4C46100F4C3FD /* TwitterDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D504B6F918E4C46100F4C3FD /* TwitterDetailViewController.m */; };
+		D504B6FA18E4C46100F4C3FD /* TwitterLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = D504B6F918E4C46100F4C3FD /* TwitterLoginController.m */; };
 		D504B6FC18E4C46100F4C3FD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D504B6FB18E4C46100F4C3FD /* Images.xcassets */; };
 		D504B70318E4C46100F4C3FD /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D504B70218E4C46100F4C3FD /* XCTest.framework */; };
 		D504B70418E4C46100F4C3FD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D504B6E018E4C46100F4C3FD /* Foundation.framework */; };
 		D504B70518E4C46100F4C3FD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D504B6E418E4C46100F4C3FD /* UIKit.framework */; };
 		D504B70D18E4C46100F4C3FD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D504B70B18E4C46100F4C3FD /* InfoPlist.strings */; };
 		D504B70F18E4C46100F4C3FD /* TwitterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D504B70E18E4C46100F4C3FD /* TwitterTests.m */; };
+		D504B71A18E4C8A800F4C3FD /* TwitterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D504B71918E4C8A800F4C3FD /* TwitterViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,14 +49,16 @@
 		D504B6F318E4C46100F4C3FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D504B6F518E4C46100F4C3FD /* TwitterMasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TwitterMasterViewController.h; sourceTree = "<group>"; };
 		D504B6F618E4C46100F4C3FD /* TwitterMasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TwitterMasterViewController.m; sourceTree = "<group>"; };
-		D504B6F818E4C46100F4C3FD /* TwitterDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TwitterDetailViewController.h; sourceTree = "<group>"; };
-		D504B6F918E4C46100F4C3FD /* TwitterDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TwitterDetailViewController.m; sourceTree = "<group>"; };
+		D504B6F818E4C46100F4C3FD /* TwitterLoginController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TwitterLoginController.h; sourceTree = "<group>"; };
+		D504B6F918E4C46100F4C3FD /* TwitterLoginController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TwitterLoginController.m; sourceTree = "<group>"; };
 		D504B6FB18E4C46100F4C3FD /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D504B70118E4C46100F4C3FD /* TwitterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TwitterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D504B70218E4C46100F4C3FD /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		D504B70A18E4C46100F4C3FD /* TwitterTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TwitterTests-Info.plist"; sourceTree = "<group>"; };
 		D504B70C18E4C46100F4C3FD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D504B70E18E4C46100F4C3FD /* TwitterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TwitterTests.m; sourceTree = "<group>"; };
+		D504B71818E4C8A800F4C3FD /* TwitterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterViewController.h; sourceTree = "<group>"; };
+		D504B71918E4C8A800F4C3FD /* TwitterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,10 +121,12 @@
 				D504B6EF18E4C46100F4C3FD /* TwitterAppDelegate.h */,
 				D504B6F018E4C46100F4C3FD /* TwitterAppDelegate.m */,
 				D504B6F218E4C46100F4C3FD /* Main.storyboard */,
+				D504B71818E4C8A800F4C3FD /* TwitterViewController.h */,
+				D504B71918E4C8A800F4C3FD /* TwitterViewController.m */,
 				D504B6F518E4C46100F4C3FD /* TwitterMasterViewController.h */,
 				D504B6F618E4C46100F4C3FD /* TwitterMasterViewController.m */,
-				D504B6F818E4C46100F4C3FD /* TwitterDetailViewController.h */,
-				D504B6F918E4C46100F4C3FD /* TwitterDetailViewController.m */,
+				D504B6F818E4C46100F4C3FD /* TwitterLoginController.h */,
+				D504B6F918E4C46100F4C3FD /* TwitterLoginController.m */,
 				D504B6FB18E4C46100F4C3FD /* Images.xcassets */,
 				D504B6E718E4C46100F4C3FD /* Supporting Files */,
 			);
@@ -256,8 +261,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D504B6F118E4C46100F4C3FD /* TwitterAppDelegate.m in Sources */,
-				D504B6FA18E4C46100F4C3FD /* TwitterDetailViewController.m in Sources */,
+				D504B6FA18E4C46100F4C3FD /* TwitterLoginController.m in Sources */,
 				D504B6ED18E4C46100F4C3FD /* main.m in Sources */,
+				D504B71A18E4C8A800F4C3FD /* TwitterViewController.m in Sources */,
 				D504B6F718E4C46100F4C3FD /* TwitterMasterViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
