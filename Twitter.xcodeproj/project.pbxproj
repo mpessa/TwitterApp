@@ -23,6 +23,7 @@
 		D504B70D18E4C46100F4C3FD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D504B70B18E4C46100F4C3FD /* InfoPlist.strings */; };
 		D504B70F18E4C46100F4C3FD /* TwitterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D504B70E18E4C46100F4C3FD /* TwitterTests.m */; };
 		D504B71A18E4C8A800F4C3FD /* TwitterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D504B71918E4C8A800F4C3FD /* TwitterViewController.m */; };
+		D5903B3D18EA0A1000478F8F /* Tweet.m in Sources */ = {isa = PBXBuildFile; fileRef = D5903B3C18EA0A1000478F8F /* Tweet.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,8 @@
 		D504B70E18E4C46100F4C3FD /* TwitterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TwitterTests.m; sourceTree = "<group>"; };
 		D504B71818E4C8A800F4C3FD /* TwitterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterViewController.h; sourceTree = "<group>"; };
 		D504B71918E4C8A800F4C3FD /* TwitterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterViewController.m; sourceTree = "<group>"; };
+		D5903B3B18EA0A1000478F8F /* Tweet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tweet.h; sourceTree = "<group>"; };
+		D5903B3C18EA0A1000478F8F /* Tweet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tweet.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +128,8 @@
 				D504B71918E4C8A800F4C3FD /* TwitterViewController.m */,
 				D504B6F518E4C46100F4C3FD /* TwitterMasterViewController.h */,
 				D504B6F618E4C46100F4C3FD /* TwitterMasterViewController.m */,
+				D5903B3B18EA0A1000478F8F /* Tweet.h */,
+				D5903B3C18EA0A1000478F8F /* Tweet.m */,
 				D504B6F818E4C46100F4C3FD /* TwitterLoginController.h */,
 				D504B6F918E4C46100F4C3FD /* TwitterLoginController.m */,
 				D504B6FB18E4C46100F4C3FD /* Images.xcassets */,
@@ -263,6 +268,7 @@
 				D504B6F118E4C46100F4C3FD /* TwitterAppDelegate.m in Sources */,
 				D504B6FA18E4C46100F4C3FD /* TwitterLoginController.m in Sources */,
 				D504B6ED18E4C46100F4C3FD /* main.m in Sources */,
+				D5903B3D18EA0A1000478F8F /* Tweet.m in Sources */,
 				D504B71A18E4C8A800F4C3FD /* TwitterViewController.m in Sources */,
 				D504B6F718E4C46100F4C3FD /* TwitterMasterViewController.m in Sources */,
 			);
@@ -469,6 +475,7 @@
 				D504B71418E4C46100F4C3FD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D504B71518E4C46100F4C3FD /* Build configuration list for PBXNativeTarget "TwitterTests" */ = {
 			isa = XCConfigurationList;
@@ -477,6 +484,7 @@
 				D504B71718E4C46100F4C3FD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

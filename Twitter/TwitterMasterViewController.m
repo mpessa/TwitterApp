@@ -11,6 +11,8 @@
 #import "TwitterLoginController.h"
 #import "TwitterViewController.h"
 
+#import "TwitterAppDelegate.h"
+
 @interface TwitterMasterViewController () {
     NSMutableArray *_objects;
 }
@@ -58,7 +60,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _objects.count;
+    TwitterAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    return [appDelegate.tweets count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -79,6 +82,8 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
+        NSDictionary *item = [[NSDictionary alloc] initWithDictionary:[_objects objectAtIndex:indexPath.row]];
+        
         [_objects removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
