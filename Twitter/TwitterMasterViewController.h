@@ -10,4 +10,5 @@
 
 @interface TwitterMasterViewController : UITableViewController
 
+- (IBAction)refreshControlValueChanged:(UIRefreshControl *)sender;
 @end

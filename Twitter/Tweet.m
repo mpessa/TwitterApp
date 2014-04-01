@@ -13,7 +13,7 @@
 -(id)init{
     if (self = [super init]) {
         self.tweet_id = 0;
-        self.userName = @"";
+        self.username = @"";
         self.isDeleted = NO;
         self.tweet = @"";
         self.date = [NSDate date];
@@ -32,7 +32,7 @@
 -(id)initWithCoder:(NSCoder *)aDecoder{
     if (self = [super init]) {
         self.tweet_id = [aDecoder decodeObjectForKey:kTweetIDKey];
-        self.userName = [aDecoder decodeObjectForKey:kUserNameKey];
+        self.username = [aDecoder decodeObjectForKey:kUserNameKey];
         self.isDeleted = [aDecoder decodeBoolForKey:kIsDeletedKey];
         self.tweet = [aDecoder decodeObjectForKey:kTweetKey];
         self.date = [aDecoder decodeObjectForKey:kDateKey];
@@ -43,7 +43,7 @@
 
 -(void)encodeWithCoder:(NSCoder *)aCoder{
     [aCoder encodeObject:self.tweet_id forKey:kTweetIDKey];
-    [aCoder encodeObject:self.userName forKey:kUserNameKey];
+    [aCoder encodeObject:self.username forKey:kUserNameKey];
     [aCoder encodeBool:self.isDeleted forKey:kIsDeletedKey];
     [aCoder encodeObject:self.tweet forKey:kTweetKey];
     [aCoder encodeObject:self.date forKey:kDateKey];
@@ -53,7 +53,7 @@
 -(id)copyWithZone:(NSZone *)zone{
     Tweet *clone = [[[self class] alloc] init];
     clone.tweet_id = self.tweet_id;
-    clone.userName = self.userName;
+    clone.username = self.username;
     clone.isDeleted = self.isDeleted;
     clone.tweet = self.tweet;
     clone.date = self.date;

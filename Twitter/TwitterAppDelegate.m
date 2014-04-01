@@ -13,7 +13,7 @@
 @implementation TwitterAppDelegate
 
 -(NSString*)pathToArchive{
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentationDirectory, NSUserDomainMask, YES);
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docDir = [paths objectAtIndex:0];
     return [docDir stringByAppendingPathComponent:@"tweets.archive"];
 }
