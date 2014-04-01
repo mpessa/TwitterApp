@@ -14,4 +14,6 @@
 
 @property (strong, nonatomic) NSMutableArray *tweets;
 
+-(NSDate *)lastTweetDate;
+
 @end

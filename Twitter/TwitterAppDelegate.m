@@ -7,6 +7,7 @@
 //
 
 #import "TwitterAppDelegate.h"
+#import "Tweet.h"
 
 #define kTweetsKey @"tweets"
 
@@ -68,6 +69,26 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+-(NSDate *)lastTweetDate{
+    if (self.tweets.count > 0) {
+        Tweet *tweet = self.tweets[0];
+        return tweet.date;
+    }
+    else{
+        NSDate *date;
+        NSDateComponents *comps = [[NSDateComponents alloc] init];
+        [comps setMonth:1];
+        [comps setDay:1];
+        [comps setYear:2014];
+        [comps setHour:1];
+        [comps setMinute:0];
+        [comps setSecond:0];
+        NSCalendar *norm = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        date = [norm dateFromComponents:comps];
+        return date;        
+    }
 }
 
 @end
