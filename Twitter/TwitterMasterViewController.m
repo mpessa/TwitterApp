@@ -184,13 +184,14 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
       parameters:parameters
          success: ^(NSURLSessionDataTask *task, id responseObject) {
              NSMutableArray *arrayOfDicts = [responseObject objectForKey:@"tweets"];
+             NSLog(@"number of tweets:%d", arrayOfDicts.count);
              //
              // Add new (sorted) tweets to head of appDelegate.tweets array.
              // If implementing delete, some older tweets may be purged.
              // Invoke [self.tableView reloadData] if any changes.
              //
              // I'm assuming that they come in sorted order(newest at front). I'll fix this if not.
-             for (int i = arrayOfDicts.count-1; i >= 0; i--) {
+             for (int i = 0; i < arrayOfDicts.count; i++) {
                  Tweet *tweet = [[Tweet alloc] init];
                  tweet.tweet_id = [arrayOfDicts[i] objectForKey:kTweetIDKey];
                  tweet.username = [arrayOfDicts[i] objectForKey:kUserNameKey];
