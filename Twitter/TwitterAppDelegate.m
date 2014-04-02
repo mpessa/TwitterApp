@@ -74,7 +74,8 @@
 -(NSDate *)lastTweetDate{
     if (self.tweets.count > 0) {
         Tweet *tweet = self.tweets[0];
-        return tweet.date;
+        NSLog(@"lastTweetDate:@%@", tweet.time_stamp);
+        return tweet.time_stamp;
     }
     else{
         NSDate *date;
@@ -87,6 +88,7 @@
         [comps setSecond:0];
         NSCalendar *norm = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
         date = [norm dateFromComponents:comps];
+        NSLog(@"lastTweetDate:%@, no tweets", date);
         return date;        
     }
 }

@@ -14,7 +14,7 @@
 @property (copy, nonatomic) NSString *username;
 @property BOOL isDeleted;
 @property (copy, nonatomic) NSString *tweet;
-@property (weak, nonatomic) NSDate *date;
+@property (weak, nonatomic) NSDate *time_stamp;
 @property (copy, nonatomic) NSAttributedString *tweetAttributedString;
 
 -(id)init;

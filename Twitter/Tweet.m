@@ -16,7 +16,7 @@
         self.username = @"";
         self.isDeleted = NO;
         self.tweet = @"";
-        self.date = [NSDate date];
+        self.time_stamp = [NSDate date];
         self.tweetAttributedString = nil;
     }
     return self;
@@ -26,7 +26,7 @@
 #define kUserNameKey @"username"
 #define kIsDeletedKey @"isdeleted"
 #define kTweetKey @"tweet"
-#define kDateKey @"date"
+#define kDateKey @"time_stamp"
 #define kTweetAttributedStringKey @"tweetAttributedString"
 
 -(id)initWithCoder:(NSCoder *)aDecoder{
@@ -35,7 +35,7 @@
         self.username = [aDecoder decodeObjectForKey:kUserNameKey];
         self.isDeleted = [aDecoder decodeBoolForKey:kIsDeletedKey];
         self.tweet = [aDecoder decodeObjectForKey:kTweetKey];
-        self.date = [aDecoder decodeObjectForKey:kDateKey];
+        self.time_stamp = [aDecoder decodeObjectForKey:kDateKey];
         self.tweetAttributedString = [aDecoder decodeObjectForKey:kTweetAttributedStringKey];
     }
     return self;
@@ -46,7 +46,7 @@
     [aCoder encodeObject:self.username forKey:kUserNameKey];
     [aCoder encodeBool:self.isDeleted forKey:kIsDeletedKey];
     [aCoder encodeObject:self.tweet forKey:kTweetKey];
-    [aCoder encodeObject:self.date forKey:kDateKey];
+    [aCoder encodeObject:self.time_stamp forKey:kDateKey];
     [aCoder encodeObject:self.tweetAttributedString forKey:kTweetAttributedStringKey];
 }
 
@@ -56,7 +56,7 @@
     clone.username = self.username;
     clone.isDeleted = self.isDeleted;
     clone.tweet = self.tweet;
-    clone.date = self.date;
+    clone.time_stamp = self.time_stamp;
     clone.tweetAttributedString = self.tweetAttributedString;
     
     return clone;

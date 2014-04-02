@@ -20,7 +20,7 @@
 #define kUserNameKey @"username"
 #define kIsDeletedKey @"isdeleted"
 #define kTweetKey @"tweet"
-#define kDateKey @"date"
+#define kDateKey @"time_stamp"
 #define kTweetAttributedStringKey @"tweetAttributedString"
 
 @interface TwitterMasterViewController () {
@@ -78,8 +78,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    
+{    
     return [appDelegate.tweets count];
 }
 
@@ -115,10 +114,15 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tweet.tweetAttributedString == nil) {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         dateFormatter.dateStyle = NSDateFormatterShortStyle;
+        //[dateFormatter setDateFormat:@"MM/dd/yy"];
         dateFormatter.timeStyle = NSDateFormatterShortStyle;
-        NSString *dateString = [dateFormatter stringFromDate:tweet.date];
+        NSLog(@"time before adding to string:%@", tweet.time_stamp);
+        // Error is here. Time is good before but becomes null when set to dateString
+        NSString *dateString = [dateFormatter stringFromDate:tweet.time_stamp];
+        NSLog(@"time after string conversion:%@", dateString);
         NSString *title = [NSString stringWithFormat:@"%@ - %@\n", tweet.username, dateString];
-        NSDictionary *titleAttributes =@{NSFontAttributeName : [UIFont systemFontOfSize:14],
+        NSLog(@"title: %@", title);
+        NSDictionary *titleAttributes = @{NSFontAttributeName : [UIFont systemFontOfSize:14],
                                          NSForegroundColorAttributeName: [UIColor blueColor]};
         NSMutableAttributedString *tweetWithAttributes = [[NSMutableAttributedString alloc] initWithString:title
                                                attributes:titleAttributes];
@@ -183,27 +187,31 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     [manager GET:@"get-tweets.cgi"
       parameters:parameters
          success: ^(NSURLSessionDataTask *task, id responseObject) {
-             NSMutableArray *arrayOfDicts = [responseObject objectForKey:@"tweets"];
-             NSLog(@"number of tweets:%d", arrayOfDicts.count);
-             //
-             // Add new (sorted) tweets to head of appDelegate.tweets array.
-             // If implementing delete, some older tweets may be purged.
-             // Invoke [self.tableView reloadData] if any changes.
-             //
-             // I'm assuming that they come in sorted order(newest at front). I'll fix this if not.
-             for (int i = 0; i < arrayOfDicts.count; i++) {
-                 Tweet *tweet = [[Tweet alloc] init];
-                 tweet.tweet_id = [arrayOfDicts[i] objectForKey:kTweetIDKey];
-                 tweet.username = [arrayOfDicts[i] objectForKey:kUserNameKey];
-                 tweet.isDeleted = [arrayOfDicts[i] objectForKey:kIsDeletedKey];
-                 tweet.tweet = [arrayOfDicts[i] objectForKey:kTweetKey];
-                 tweet.date = [arrayOfDicts[i] objectForKey:kDateKey];
-                 tweet.tweetAttributedString = [arrayOfDicts[i] objectForKey:kTweetAttributedStringKey];
-                 [appDelegate.tweets insertObject:tweet atIndex:0];
-             }
-             if (arrayOfDicts.count > 0) {
-                 NSLog(@"need to reloadData");
-                 [self.tableView reloadData];
+             NSLog(@"in success");
+             if ([responseObject objectForKey:@"tweets"] != nil) {
+                 NSMutableArray *arrayOfDicts = [responseObject objectForKey:@"tweets"];
+                 NSLog(@"number of tweets:%d", arrayOfDicts.count);
+                 //
+                 // Add new (sorted) tweets to head of appDelegate.tweets array.
+                 // If implementing delete, some older tweets may be purged.
+                 // Invoke [self.tableView reloadData] if any changes.
+                 //
+                 for (int i = 0; i < arrayOfDicts.count; i++) {
+                     if ([[arrayOfDicts[i] objectForKey:kIsDeletedKey] intValue] == 0) {
+                         Tweet *tweet = [[Tweet alloc] init];
+                         tweet.tweet_id = [arrayOfDicts[i] objectForKey:kTweetIDKey];
+                         tweet.username = [arrayOfDicts[i] objectForKey:kUserNameKey];
+                         tweet.isDeleted = [[arrayOfDicts[i] objectForKey:kIsDeletedKey] intValue];
+                         tweet.tweet = [arrayOfDicts[i] objectForKey:kTweetKey];
+                         tweet.time_stamp = [arrayOfDicts[i] objectForKey:kDateKey];
+                         tweet.tweetAttributedString = [arrayOfDicts[i] objectForKey:kTweetAttributedStringKey];
+                         [appDelegate.tweets insertObject:tweet atIndex:0];
+                     }
+                }
+                 if (arrayOfDicts.count > 0) {
+                    NSLog(@"need to reloadData");
+                    [self.tableView reloadData];
+                }
              }
              [self.refreshControl endRefreshing];
          } failure:^(NSURLSessionDataTask *task, NSError *error) {
