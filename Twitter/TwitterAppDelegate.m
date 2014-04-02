@@ -73,7 +73,9 @@
 
 -(NSDate *)lastTweetDate{
     if (self.tweets.count > 0) {
-        Tweet *tweet = self.tweets[0];
+        Tweet *tweet = [[Tweet alloc] init];
+        tweet = [self.tweets objectAtIndex:0];
+        NSLog(@"last user:%@", tweet.username);
         NSLog(@"lastTweetDate:@%@", tweet.time_stamp);
         return tweet.time_stamp;
     }

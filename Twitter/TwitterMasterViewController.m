@@ -117,7 +117,8 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
         //[dateFormatter setDateFormat:@"MM/dd/yy"];
         dateFormatter.timeStyle = NSDateFormatterShortStyle;
         NSLog(@"time before adding to string:%@", tweet.time_stamp);
-        // Error is here. Time is good before but becomes null when set to dateString
+        // Error is here. Time is good before but becomes null when set to dateString.
+        // This is messing everything up, I think.
         NSString *dateString = [dateFormatter stringFromDate:tweet.time_stamp];
         NSLog(@"time after string conversion:%@", dateString);
         NSString *title = [NSString stringWithFormat:@"%@ - %@\n", tweet.username, dateString];
@@ -213,6 +214,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
                     [self.tableView reloadData];
                 }
              }
+             [self checkDates];
              [self.refreshControl endRefreshing];
          } failure:^(NSURLSessionDataTask *task, NSError *error) {
              NSLog(@"in failure");
@@ -243,6 +245,15 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         NSDate *object = _objects[indexPath.row];
         [[segue destinationViewController] setDetailItem:object];
+    }
+}
+
+-(void)checkDates{
+    NSMutableArray *testArray = [[NSMutableArray alloc] initWithArray:appDelegate.tweets copyItems:YES];
+    for (int i = 0; i < testArray.count; i++) {
+        Tweet *test = [[Tweet alloc] init];
+        test = testArray[i];
+        NSLog(@"date @ %d:%@", i, test.time_stamp);
     }
 }
 
