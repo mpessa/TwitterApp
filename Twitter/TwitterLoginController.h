@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
 @property (strong, nonatomic) IBOutlet UITextField *passwordField;
 @property (strong, nonatomic) IBOutlet UITextField *nameField;
+@property (strong, nonatomic) IBOutlet UIButton *loginButton;
 
 - (IBAction)loginButtonPressed:(UIButton *)sender;
 - (IBAction)registerButtonPressed:(UIButton *)sender;

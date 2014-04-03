@@ -69,6 +69,12 @@
 -(void)login:(id)sender{
     [self performSegueWithIdentifier:@"login" sender:self];
     //appDelegate.loggedIn = YES;
+    if (appDelegate.loggedIn) {
+        self.navigationController.title = appDelegate.user;
+    }
+    else{
+        self.navigationController.title = @"Current Tweets";
+    }
 }
 
 #pragma mark - Table View

@@ -141,7 +141,7 @@
                                 <rect key="frame" x="33" y="274" width="254" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="Ah7-4n-0Wa" id="hQZ-Nj-kOx"/>
                                 </connections>
@@ -187,6 +187,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Log In" id="cra-N8-TIN"/>
                     <connections>
+                        <outlet property="loginButton" destination="XDV-B4-orc" id="gkJ-oJ-W9j"/>
                         <outlet property="nameField" destination="7gh-mm-Df4" id="XRR-2f-zm1"/>
                         <outlet property="passwordField" destination="VN3-JP-f8c" id="w3l-KI-1sM"/>
                     </connections>
@@ -239,6 +240,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="N09-eG-tp1"/>
+        <segue reference="fza-MU-5zV"/>
     </inferredMetricsTieBreakers>
 </document>

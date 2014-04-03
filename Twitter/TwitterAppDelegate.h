@@ -14,6 +14,7 @@
 
 @property (strong, nonatomic) NSMutableArray *tweets;
 @property BOOL loggedIn;
+@property (strong, nonatomic) NSString *user;
 
 -(NSDate *)lastTweetDate;
 
