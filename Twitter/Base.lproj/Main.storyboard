@@ -45,9 +45,6 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <segue destination="gyl-i1-ncs" kind="modal" identifier="logIn" id="jUr-3t-vfg"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <sections/>
@@ -73,11 +70,12 @@
                     </refreshControl>
                     <connections>
                         <segue destination="8S8-Qu-0Ua" kind="modal" identifier="addTweet" id="BjT-va-DpE"/>
+                        <segue destination="gyl-i1-ncs" kind="modal" identifier="login" id="fza-MU-5zV"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Cn-md-YlS" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="461" y="64"/>
+            <point key="canvasLocation" x="428" y="64"/>
         </scene>
         <!--Twitter View Controller - Add Tweet-->
         <scene sceneID="cg1-3B-t4b">
@@ -228,6 +226,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="jUr-3t-vfg"/>
+        <segue reference="fza-MU-5zV"/>
     </inferredMetricsTieBreakers>
 </document>

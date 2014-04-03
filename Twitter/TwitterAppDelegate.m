@@ -34,6 +34,7 @@
         // Update later. Need to figure this part out.
         self.tweets = [[NSMutableArray alloc] init];
     }
+    self.loggedIn = NO;
     return YES;
 }
 							

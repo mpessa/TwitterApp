@@ -41,7 +41,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    UIBarButtonItem *loginButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(login:)];
+    self.navigationItem.leftBarButtonItem = loginButton;
 
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
     self.navigationItem.rightBarButtonItem = addButton;
@@ -62,12 +63,23 @@
 
 - (void)insertNewObject:(id)sender
 {
+    if (appDelegate.loggedIn) {
+        NSLog(@"add a tweet");
+    }
+    else{
+        NSLog(@"login in to add tweet");
+    }
 //    if (!_objects) {
 //        _objects = [[NSMutableArray alloc] init];
 //    }
 //    [_objects insertObject:[NSDate date] atIndex:0];
 //    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
 //    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+-(void)login:(id)sender{
+    NSLog(@"pretend to login");
+    appDelegate.loggedIn = YES;
 }
 
 #pragma mark - Table View
@@ -207,6 +219,16 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
                          tweet.time_stamp = [arrayOfDicts[i] objectForKey:kDateKey];
                          tweet.tweetAttributedString = [arrayOfDicts[i] objectForKey:kTweetAttributedStringKey];
                          [appDelegate.tweets insertObject:tweet atIndex:0];
+                     }
+                     else{
+                         // If the tweet was deleted, go through the local tweet list and remove it
+                         for (int i = 0; i < appDelegate.tweets.count; i++) {
+                             Tweet *temp = [appDelegate.tweets objectAtIndex:i];
+                             if ([arrayOfDicts[i] objectForKey:kTweetIDKey] == temp.tweet_id) {
+                                 [appDelegate.tweets removeObjectAtIndex:i];
+                                 break;
+                             }
+                         }
                      }
                 }
                  if (arrayOfDicts.count > 0) {
