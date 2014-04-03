@@ -52,7 +52,7 @@
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     
     appDelegate = [[UIApplication sharedApplication] delegate];
-    //[self refreshTweets];
+    [self refreshTweets];
 }
 
 - (void)didReceiveMemoryWarning
@@ -63,22 +63,12 @@
 
 - (void)insertNewObject:(id)sender
 {
-    if (appDelegate.loggedIn) {
-        NSLog(@"add a tweet");
-    }
-    else{
-        NSLog(@"login in to add tweet");
-    }
-//    if (!_objects) {
-//        _objects = [[NSMutableArray alloc] init];
-//    }
-//    [_objects insertObject:[NSDate date] atIndex:0];
-//    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-//    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self performSegueWithIdentifier:@"addTweet" sender:self];
 }
 
 -(void)login:(id)sender{
     NSLog(@"pretend to login");
+    [self performSegueWithIdentifier:@"login" sender:self];
     appDelegate.loggedIn = YES;
 }
 
@@ -126,7 +116,6 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tweet.tweetAttributedString == nil) {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         dateFormatter.dateStyle = NSDateFormatterShortStyle;
-        //[dateFormatter setDateFormat:@"MM/dd/yy"];
         dateFormatter.timeStyle = NSDateFormatterShortStyle;
         NSLog(@"time before adding to string:%@", tweet.time_stamp);
         // Error is here. Time is good before but becomes null when set to dateString.
@@ -216,7 +205,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
                          tweet.username = [arrayOfDicts[i] objectForKey:kUserNameKey];
                          tweet.isDeleted = [[arrayOfDicts[i] objectForKey:kIsDeletedKey] intValue];
                          tweet.tweet = [arrayOfDicts[i] objectForKey:kTweetKey];
-                         tweet.time_stamp = [arrayOfDicts[i] objectForKey:kDateKey];
+                         tweet.time_stamp = [dateFormatter dateFromString:[arrayOfDicts[i] objectForKey:kDateKey]];
                          tweet.tweetAttributedString = [arrayOfDicts[i] objectForKey:kTweetAttributedStringKey];
                          [appDelegate.tweets insertObject:tweet atIndex:0];
                      }
@@ -236,7 +225,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
                     [self.tableView reloadData];
                 }
              }
-             [self checkDates];
+             //[self checkDates];
              [self.refreshControl endRefreshing];
          } failure:^(NSURLSessionDataTask *task, NSError *error) {
              NSLog(@"in failure");
@@ -263,10 +252,11 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"showDetail"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSDate *object = _objects[indexPath.row];
-        [[segue destinationViewController] setDetailItem:object];
+    if ([[segue identifier] isEqualToString:@"addTweet"]) {
+//        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+//        NSDate *object = _objects[indexPath.row];
+//        [[segue destinationViewController] setDetailItem:object];
+        
     }
 }
 

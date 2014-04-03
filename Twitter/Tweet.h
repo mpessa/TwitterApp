@@ -10,11 +10,11 @@
 
 @interface Tweet : NSObject <NSCopying, NSCoding>
 
-@property (weak, nonatomic) NSNumber *tweet_id;
+@property (strong, nonatomic) NSNumber *tweet_id;
 @property (copy, nonatomic) NSString *username;
 @property BOOL isDeleted;
 @property (copy, nonatomic) NSString *tweet;
-@property (weak, nonatomic) NSDate *time_stamp;
+@property (strong, nonatomic) NSDate *time_stamp;
 @property (copy, nonatomic) NSAttributedString *tweetAttributedString;
 
 -(id)init;

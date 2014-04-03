@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TwitterLoginController : UIViewController
+@interface TwitterLoginController : UIViewController <UITextFieldDelegate>
 
 @property (strong, nonatomic) id detailItem;
 
