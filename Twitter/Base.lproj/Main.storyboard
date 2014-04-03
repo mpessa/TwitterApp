@@ -108,6 +108,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Add Tweet" id="7Hn-9e-nrX"/>
                     <connections>
+                        <outlet property="textLength" destination="npy-EJ-8x0" id="kbV-br-xD9"/>
                         <outlet property="tweetText" destination="SKn-uP-zxL" id="LOm-cc-1D3"/>
                         <segue destination="gyl-i1-ncs" kind="modal" identifier="loginToAddTweet" id="N09-eG-tp1"/>
                     </connections>
@@ -240,6 +241,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="fza-MU-5zV"/>
+        <segue reference="N09-eG-tp1"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -108,6 +108,7 @@
               else{
                   appDelegate.loggedIn = YES;
                   appDelegate.user = username;
+                  appDelegate.token = [responseObject objectForKey:@"session_token"];
                   [self dismissViewControllerAnimated:YES completion:nil];
               }
           } failure:^(NSURLSessionDataTask *task, NSError *error) {

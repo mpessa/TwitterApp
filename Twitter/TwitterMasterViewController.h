@@ -8,7 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TwitterMasterViewController : UITableViewController
+@protocol AddTweetDelegate <NSObject>
+@optional
+-(void)didCancelAddTweet;
+-(void)didAddTweet;
+@end
+
+@interface TwitterMasterViewController : UITableViewController <AddTweetDelegate>
 
 - (IBAction)refreshControlValueChanged:(UIRefreshControl *)sender;
 @end

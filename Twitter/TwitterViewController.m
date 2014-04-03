@@ -8,10 +8,14 @@
 
 #import "TwitterViewController.h"
 #import "TwitterAppDelegate.h"
+#import "AFHTTPSessionManager.h"
 
-@interface TwitterViewController ()
-
+@interface TwitterViewController (){
+    AFHTTPSessionManager *manager;
+}
 @end
+
+#define BaseURLString @"https://bend.encs.vancouver.wsu.edu/~wcochran/cgi-bin/"
 
 @implementation TwitterViewController
 
@@ -33,6 +37,9 @@
     UIBarButtonItem *tweet = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(sendTweet:)];
     self.navigationItem.rightBarButtonItem = tweet;
     self.appDelegate = [[UIApplication sharedApplication] delegate];
+    NSURL *baseURL = [NSURL URLWithString:BaseURLString];
+    manager = [[AFHTTPSessionManager alloc] initWithBaseURL:baseURL];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
 }
 
 -(void)cancelTweet:(id)sender{
@@ -41,8 +48,58 @@
 
 -(void)sendTweet:(id)sender{
     if (self.appDelegate.loggedIn) {
+        NSString *message = self.tweetText.text;
         // Send tweet to server
-        // Popup alert if error
+        NSDictionary *parameters = @{@"username" : self.appDelegate.user, @"session_token" : self.appDelegate.token, @"tweet" : message};
+        
+        [manager POST:@"add-tweet.cgi"
+           parameters:parameters
+              success: ^(NSURLSessionDataTask *task, id responseObject) {
+                  // Enter success stuff here
+                  if ([[responseObject objectForKey:@"tweet"] isEqualToString:message]){
+                      // Send message to addTweetDelegate
+                      [self.tweetDelegate didAddTweet]; // Not quite sure what is wrong yet.
+                  }
+              } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                  NSLog(@"in failure");
+                  NSHTTPURLResponse *response = (NSHTTPURLResponse *)task.response;
+                  const int statuscode = response.statusCode;
+                  //
+                  // Display AlertView with appropriate error message.
+                  //
+                  if (statuscode == 500) {
+                      UIAlertView *err = [[UIAlertView alloc] initWithTitle:@"Something stranged happened....."
+                                                                    message:@"There was an issue logging in\nPlease try again later"
+                                                                   delegate:self
+                                                          cancelButtonTitle:@"OK"
+                                                          otherButtonTitles:nil, nil];
+                      [err show];
+                  }
+                  if (statuscode == 400) {
+                      UIAlertView *err = [[UIAlertView alloc] initWithTitle:@"Missing Fields"
+                                                                    message:@"All fields must be entered"
+                                                                   delegate:self
+                                                          cancelButtonTitle:@"OK"
+                                                          otherButtonTitles:nil, nil];
+                      [err show];
+                  }
+                  if (statuscode == 401) {
+                      UIAlertView *err = [[UIAlertView alloc] initWithTitle:@"Unauthorized Acess"
+                                                                    message:@"User is not currently logged in\nPlease log in and try again"
+                                                                   delegate:self
+                                                          cancelButtonTitle:@"OK"
+                                                          otherButtonTitles:nil, nil];
+                      [err show];
+                  }
+                  if (statuscode == 404) {
+                      UIAlertView *err = [[UIAlertView alloc] initWithTitle:@"User does not exist"
+                                                                    message:@"Please register before attempting to add a tweet"
+                                                                   delegate:self
+                                                          cancelButtonTitle:@"OK"
+                                                          otherButtonTitles:nil, nil];
+                      [err show];
+                  }
+              }];
         [self dismissViewControllerAnimated:YES completion:nil];
     }
     else{

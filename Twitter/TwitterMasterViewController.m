@@ -52,6 +52,12 @@
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     
     appDelegate = [[UIApplication sharedApplication] delegate];
+    if (appDelegate.loggedIn) {
+        self.navigationController.title = appDelegate.user;
+    }
+    else{
+        self.navigationController.title = @"Current Tweets";
+    }
     [self refreshTweets];
 }
 
@@ -68,13 +74,6 @@
 
 -(void)login:(id)sender{
     [self performSegueWithIdentifier:@"login" sender:self];
-    //appDelegate.loggedIn = YES;
-    if (appDelegate.loggedIn) {
-        self.navigationController.title = appDelegate.user;
-    }
-    else{
-        self.navigationController.title = @"Current Tweets";
-    }
 }
 
 #pragma mark - Table View
@@ -85,8 +84,15 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{    
-    return [appDelegate.tweets count];
+{
+    int count = 0;
+    for (int i = 0; i < appDelegate.tweets.count; i++) {
+        Tweet *tweet = [appDelegate.tweets objectAtIndex:i];
+        if (!tweet.isDeleted) {
+            count++;
+        }
+    }
+    return count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -96,10 +102,12 @@
                                                             forIndexPath:indexPath];
     //TwitterAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     Tweet *tweet = appDelegate.tweets[indexPath.row];
-    NSAttributedString *tweetAttributedString =
-    [self tweetAttributedStringFromTweet:tweet];
-    cell.textLabel.numberOfLines = 0; // multi-line label
-    cell.textLabel.attributedText = tweetAttributedString;
+    if (!tweet.isDeleted) {
+        NSAttributedString *tweetAttributedString =
+        [self tweetAttributedStringFromTweet:tweet];
+        cell.textLabel.numberOfLines = 0; // multi-line label
+        cell.textLabel.attributedText = tweetAttributedString;
+    }
     return cell;
 }
 
@@ -145,20 +153,80 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the specified item to be editable.
-    return NO;
+    return YES;
 }
 
-//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    if (editingStyle == UITableViewCellEditingStyleDelete) {
-//        NSDictionary *item = [[NSDictionary alloc] initWithDictionary:[_objects objectAtIndex:indexPath.row]];
-//        
-//        [_objects removeObjectAtIndex:indexPath.row];
-//        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-//    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        if (appDelegate.loggedIn) {
+        Tweet *tweet = [appDelegate.tweets objectAtIndex:indexPath.row];
+            NSDictionary *parameters = @{@"username" : appDelegate.user, @"session_token" : appDelegate.token, @"tweet_id" : tweet.tweet_id};
+            
+            [manager POST:@"del-tweet.cgi"
+               parameters:parameters
+                  success: ^(NSURLSessionDataTask *task, id responseObject) {
+                      // Enter success stuff here
+                      if ([[responseObject objectForKey:@"tweet"] isEqualToString:@"[delete]"]){
+                          // Send message to addTweetDelegate
+                          [self didAddTweet]; // Using this to remove the tweet. Update it.
+                      }
+                      else{
+                          NSLog(@"Did not work correctly.....");
+                      }
+                  } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                      NSLog(@"in failure");
+                      NSHTTPURLResponse *response = (NSHTTPURLResponse *)task.response;
+                      const int statuscode = response.statusCode;
+                      //
+                      // Display AlertView with appropriate error message.
+                      //
+                      if (statuscode == 500) {
+                          UIAlertView *err = [[UIAlertView alloc] initWithTitle:@"Something stranged happened....."
+                                                                        message:@"There was an issue logging in\nPlease try again later"
+                                                                       delegate:self
+                                                              cancelButtonTitle:@"OK"
+                                                              otherButtonTitles:nil, nil];
+                          [err show];
+                      }
+                      if (statuscode == 400) {
+                          UIAlertView *err = [[UIAlertView alloc] initWithTitle:@"Missing Fields"
+                                                                        message:@"All fields must be entered"
+                                                                       delegate:self
+                                                              cancelButtonTitle:@"OK"
+                                                              otherButtonTitles:nil, nil];
+                          [err show];
+                      }
+                      if (statuscode == 401) {
+                          UIAlertView *err = [[UIAlertView alloc] initWithTitle:@"Unauthorized Acess"
+                                                                        message:@"User is not currently logged in\nPlease log in and try again"
+                                                                       delegate:self
+                                                              cancelButtonTitle:@"OK"
+                                                              otherButtonTitles:nil, nil];
+                          [err show];
+                      }
+                      if (statuscode == 403) {
+                          UIAlertView *err = [[UIAlertView alloc] initWithTitle:@"Unathorized"
+                                                                        message:@"Only the author of the tweet may delete it"
+                                                                       delegate:self
+                                                              cancelButtonTitle:@"OK"
+                                                              otherButtonTitles:nil, nil];
+                          [err show];
+                      }
+                      if (statuscode == 404) {
+                          UIAlertView *err = [[UIAlertView alloc] initWithTitle:@"User does not exist"
+                                                                        message:@"Please register before attempting to add a tweet"
+                                                                       delegate:self
+                                                              cancelButtonTitle:@"OK"
+                                                              otherButtonTitles:nil, nil];
+                          [err show];
+                      }
+                  }];
+        }
+    } //else if (editingStyle == UITableViewCellEditingStyleInsert) {
 //        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
 //    }
-//}
+}
 
 /*
 // Override to support rearranging the table view.
@@ -209,11 +277,14 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
                      }
                      else{
                          // If the tweet was deleted, go through the local tweet list and remove it
-                         for (int i = 0; i < appDelegate.tweets.count; i++) {
-                             Tweet *temp = [appDelegate.tweets objectAtIndex:i];
-                             if ([arrayOfDicts[i] objectForKey:kTweetIDKey] == temp.tweet_id) {
-                                 [appDelegate.tweets removeObjectAtIndex:i];
-                                 break;
+                         for (int j = 0; j < arrayOfDicts.count; j++) {
+                             NSNumber *spot = [arrayOfDicts[i] objectForKey:kTweetIDKey];
+                             for (int i = 0; i < appDelegate.tweets.count; i++) {
+                                 Tweet *temp = [appDelegate.tweets objectAtIndex:i];
+                                 if (spot == temp.tweet_id) {
+                                     [appDelegate.tweets removeObjectAtIndex:i];
+                                     break;
+                                 }
                              }
                          }
                      }
@@ -222,7 +293,6 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
                     [self.tableView reloadData];
                 }
              }
-             //[self checkDates];
              [self.refreshControl endRefreshing];
          } failure:^(NSURLSessionDataTask *task, NSError *error) {
              NSLog(@"in failure");
@@ -250,10 +320,9 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"addTweet"]) {
-//        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-//        NSDate *object = _objects[indexPath.row];
-//        [[segue destinationViewController] setDetailItem:object];
-        
+        UINavigationController *destControl = segue.destinationViewController;
+        TwitterViewController *viewController = (TwitterViewController*)destControl.topViewController;
+        viewController.tweetDelegate = self;
     }
 }
 

@@ -76,6 +76,7 @@
     if (self.tweets.count > 0) {
         Tweet *tweet = [[Tweet alloc] init];
         tweet = [self.tweets objectAtIndex:0];
+        NSLog(@"time:%@", tweet.time_stamp);
         return tweet.time_stamp;
     }
     else{

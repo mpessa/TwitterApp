@@ -9,9 +9,17 @@
 #import <UIKit/UIKit.h>
 #import "TwitterAppDelegate.h"
 
+@protocol AddTweetDelegate <NSObject>
+@optional
+-(void)didCancelAddTweet;
+-(void)didAddTweet;
+@end
+
 @interface TwitterViewController : UIViewController
 
 @property (strong, nonatomic) IBOutlet UITextView *tweetText;
 @property (strong, nonatomic) TwitterAppDelegate *appDelegate;
+@property (strong, nonatomic) IBOutlet UILabel *textLength;
+@property (weak) id <AddTweetDelegate> tweetDelegate;
 
 @end
