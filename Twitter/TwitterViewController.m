@@ -7,6 +7,7 @@
 //
 
 #import "TwitterViewController.h"
+#import "TwitterAppDelegate.h"
 
 @interface TwitterViewController ()
 
@@ -27,6 +28,26 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelTweet:)];
+    self.navigationItem.leftBarButtonItem = cancel;
+    UIBarButtonItem *tweet = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(sendTweet:)];
+    self.navigationItem.rightBarButtonItem = tweet;
+    self.appDelegate = [[UIApplication sharedApplication] delegate];
+}
+
+-(void)cancelTweet:(id)sender{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)sendTweet:(id)sender{
+    if (self.appDelegate.loggedIn) {
+        // Send tweet to server
+        // Popup alert if error
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+    else{
+        [self performSegueWithIdentifier:@"loginToAddTweet" sender:self];
+    }
 }
 
 - (void)didReceiveMemoryWarning

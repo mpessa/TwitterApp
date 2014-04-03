@@ -67,9 +67,8 @@
 }
 
 -(void)login:(id)sender{
-    NSLog(@"pretend to login");
     [self performSegueWithIdentifier:@"login" sender:self];
-    appDelegate.loggedIn = YES;
+    //appDelegate.loggedIn = YES;
 }
 
 #pragma mark - Table View
@@ -117,13 +116,8 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         dateFormatter.dateStyle = NSDateFormatterShortStyle;
         dateFormatter.timeStyle = NSDateFormatterShortStyle;
-        NSLog(@"time before adding to string:%@", tweet.time_stamp);
-        // Error is here. Time is good before but becomes null when set to dateString.
-        // This is messing everything up, I think.
         NSString *dateString = [dateFormatter stringFromDate:tweet.time_stamp];
-        NSLog(@"time after string conversion:%@", dateString);
         NSString *title = [NSString stringWithFormat:@"%@ - %@\n", tweet.username, dateString];
-        NSLog(@"title: %@", title);
         NSDictionary *titleAttributes = @{NSFontAttributeName : [UIFont systemFontOfSize:14],
                                          NSForegroundColorAttributeName: [UIColor blueColor]};
         NSMutableAttributedString *tweetWithAttributes = [[NSMutableAttributedString alloc] initWithString:title
@@ -189,10 +183,8 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     [manager GET:@"get-tweets.cgi"
       parameters:parameters
          success: ^(NSURLSessionDataTask *task, id responseObject) {
-             NSLog(@"in success");
              if ([responseObject objectForKey:@"tweets"] != nil) {
                  NSMutableArray *arrayOfDicts = [responseObject objectForKey:@"tweets"];
-                 NSLog(@"number of tweets:%d", arrayOfDicts.count);
                  //
                  // Add new (sorted) tweets to head of appDelegate.tweets array.
                  // If implementing delete, some older tweets may be purged.
@@ -220,8 +212,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
                          }
                      }
                 }
-                 if (arrayOfDicts.count > 0) {
-                    NSLog(@"need to reloadData");
+                if (arrayOfDicts.count > 0) {
                     [self.tableView reloadData];
                 }
              }
@@ -257,15 +248,6 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 //        NSDate *object = _objects[indexPath.row];
 //        [[segue destinationViewController] setDetailItem:object];
         
-    }
-}
-
--(void)checkDates{
-    NSMutableArray *testArray = [[NSMutableArray alloc] initWithArray:appDelegate.tweets copyItems:YES];
-    for (int i = 0; i < testArray.count; i++) {
-        Tweet *test = [[Tweet alloc] init];
-        test = testArray[i];
-        NSLog(@"date @ %d:%@", i, test.time_stamp);
     }
 }
 

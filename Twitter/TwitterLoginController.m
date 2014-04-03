@@ -7,6 +7,10 @@
 //
 
 #import "TwitterLoginController.h"
+#import "TwitterAppDelegate.h"
+#import "AFHTTPSessionManager.h"
+
+#define BaseURLString @"https://bend.encs.vancouver.wsu.edu/~wcochran/cgi-bin/"
 
 @interface TwitterLoginController ()
 - (void)configureView;
@@ -39,7 +43,14 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelLogin:)];
+    self.navigationItem.leftBarButtonItem = cancel;
+    
     [self configureView];
+}
+
+-(void)cancelLogin:(id)sender{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning
