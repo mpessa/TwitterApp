@@ -15,7 +15,7 @@
 -(void)didAddTweet;
 @end
 
-@interface TwitterViewController : UIViewController
+@interface TwitterViewController : UIViewController <UITextViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextView *tweetText;
 @property (strong, nonatomic) TwitterAppDelegate *appDelegate;

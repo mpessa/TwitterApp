@@ -40,14 +40,30 @@
     NSURL *baseURL = [NSURL URLWithString:BaseURLString];
     manager = [[AFHTTPSessionManager alloc] initWithBaseURL:baseURL];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    self.tweetText.delegate = self;
 }
 
 -(void)cancelTweet:(id)sender{
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+-(void)textViewDidChange:(UITextView *)textView{
+    if (self.tweetText.text.length > 140) {
+        unichar letters[140];
+        for (int i = 0; i < 140; i++) {
+            letters[i] = [self.tweetText.text characterAtIndex:i];
+        }
+        NSString *resetText = [[NSString alloc] initWithCharacters:letters length:140];
+        self.tweetText.text = resetText;
+    }
+    NSMutableString *currentLength = [[NSMutableString alloc] init];
+    [currentLength appendString:[NSString stringWithFormat:@"%d", textView.text.length]];
+    [currentLength appendString:@" / 140"];
+    self.textLength.text = currentLength;
+}
+
 -(void)sendTweet:(id)sender{
-    if (self.appDelegate.loggedIn) {
+    if (self.appDelegate.loggedIn && self.tweetText.text.length > 0) {
         NSString *message = self.tweetText.text;
         // Send tweet to server
         NSDictionary *parameters = @{@"username" : self.appDelegate.user, @"session_token" : self.appDelegate.token, @"tweet" : message};

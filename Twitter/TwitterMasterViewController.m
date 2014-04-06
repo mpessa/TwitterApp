@@ -52,12 +52,7 @@
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     
     appDelegate = [[UIApplication sharedApplication] delegate];
-    if (appDelegate.loggedIn) {
-        self.navigationController.title = appDelegate.user;
-    }
-    else{
-        self.navigationController.title = @"Current Tweets";
-    }
+    
     [self refreshTweets];
 }
 
@@ -245,6 +240,13 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 */
 
 -(void)refreshTweets{
+    
+    if (appDelegate.loggedIn) {
+        self.title = appDelegate.user;
+    }
+    else{
+        self.title = @"Current Tweets";
+    }
     
     NSLog(@"refreshing");
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
