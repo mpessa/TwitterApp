@@ -79,7 +79,6 @@
 }
 
 - (IBAction)loginButtonPressed:(UIButton *)sender {
-    NSLog(@"logging in");
     NSString *username = self.nameField.text;
     NSString *password = self.passwordField.text;
     NSString *action;
@@ -104,15 +103,16 @@
                                                          cancelButtonTitle:@"OK"
                                                          otherButtonTitles:nil, nil];
                   [logout show];
+                  [self.loginButton setTitle:@"Login" forState:UIControlStateNormal];
               }
               else{
                   appDelegate.loggedIn = YES;
                   appDelegate.user = username;
                   appDelegate.token = [responseObject objectForKey:@"session_token"];
                   [self dismissViewControllerAnimated:YES completion:nil];
+                  [self.loginButton setTitle:@"Logout" forState:UIControlStateNormal];
               }
           } failure:^(NSURLSessionDataTask *task, NSError *error) {
-              NSLog(@"in failure");
               NSHTTPURLResponse *response = (NSHTTPURLResponse *)task.response;
               const int statuscode = response.statusCode;
               //

@@ -248,7 +248,6 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
         self.title = @"Current Tweets";
     }
     
-    NSLog(@"refreshing");
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
     dateFormatter.timeZone = [NSTimeZone timeZoneWithAbbreviation:@"PST"];
