@@ -16,5 +16,7 @@
 
 @interface TwitterMasterViewController : UITableViewController <AddTweetDelegate>
 
+@property (strong, nonatomic) NSTimer *timer;
+
 - (IBAction)refreshControlValueChanged:(UIRefreshControl *)sender;
 @end

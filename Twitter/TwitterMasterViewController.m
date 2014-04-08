@@ -53,6 +53,7 @@
     
     appDelegate = [[UIApplication sharedApplication] delegate];
     
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(refreshTweets) userInfo:nil repeats:YES];
     [self refreshTweets];
 }
 
@@ -241,6 +242,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
 -(void)refreshTweets{
     
+    NSLog(@"refresh");
     if (appDelegate.loggedIn) {
         self.title = appDelegate.user;
     }
